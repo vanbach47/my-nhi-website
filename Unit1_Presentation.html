@@ -509,7 +509,16 @@
   <!-- Navigation -->
   <div class="nav-buttons">
     <button class="nav-btn" onclick="prevSlide()">◀ Trước</button>
+    <button class="nav-btn" onclick="readCurrentSlide()">🔊 Đọc</button>
+    <button class="nav-btn" onclick="stopSpeak()">🔇 Dừng</button>
     <button class="nav-btn" onclick="nextSlide()">Sau ▶</button>
+  </div>
+  <div style="position: fixed; top: 20px; right: 20px; background: rgba(0,0,0,0.5); padding: 12px 16px; border-radius: 12px; z-index: 100; font-size: 14px;">
+    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+      <input type="checkbox" id="autoSpeak" checked />
+      <span>Giọng đọc tự động</span>
+    </label>
+    <div style="font-size: 12px; color: #aaa; margin-top: 6px;">Ưu tiên giọng nữ English nếu trình duyệt hỗ trợ</div>
   </div>
   <div class="slide-counter">
     <span id="current-slide">1</span> / <span id="total-slides">13</span>
@@ -518,8 +527,58 @@
   <script>
     let currentSlide = 1;
     const totalSlides = 13;
+    let speechSynthesis = window.speechSynthesis;
+    let currentUtterance = null;
+    
+    // Nội dung đọc cho mỗi slide
+    const slideContent = {
+      1: "Unit 1: In the school playground. Tiếng Anh Lớp 1. Cô Nguyễn Thị Mỹ Nhi.",
+      2: "What can you see at school? Các em nhìn thấy gì ở trường? School, Kids, Books, Ball.",
+      3: "Learn the letter B. Đây là chữ B in hoa. Và đây là chữ b in thường.",
+      4: "The sound /b/. Âm B được phát ra như tiếng bong bóng vỡ: Bụp!",
+      5: "Bill. /bɪl/. Bill là tên một bạn nam.",
+      6: "Book. /bʊk/. Book là quyển sách.",
+      7: "Bike. /baɪk/. Bike là xe đạp.",
+      8: "Ball. /bɔːl/. Ball là quả bóng.",
+      9: "Read after me! Đọc theo cô: B I L L - Bill! B O O K - Book! B I K E - Bike! B A L L - Ball!",
+      10: "Find the B words! Tìm những từ bắt đầu bằng chữ B. Click vào Bill, Book.",
+      11: "Today we learned. Hôm nay chúng ta đã học: Chữ B, Âm /b/, và 4 từ vựng: Bill, Book, Bike, Ball.",
+      12: "Homework. Bài tập về nhà: Luyện đọc Bill, Book, Bike, Ball. Tìm 3 từ khác bắt đầu bằng B. Cho phụ huynh xem lại.",
+      13: "See you next lesson! Hẹn gặp lại các em ở bài tiếp theo!",
+    };
+    
+    function speak(text) {
+      // Stop any current speech
+      if (currentUtterance) {
+        speechSynthesis.cancel();
+      }
+      
+      currentUtterance = new SpeechSynthesisUtterance(text);
+      currentUtterance.lang = 'en-US';
+      currentUtterance.rate = 0.8; // Chậm lại cho học sinh
+      currentUtterance.pitch = 1;
+      
+      // Ưu tiên giọng nữ tiếng Anh nếu có
+      const voices = speechSynthesis.getVoices();
+      const femaleEnglishVoice = voices.find(v => /en/i.test(v.lang) && /(female|zira|aria|samantha|victoria|linda|ava|jenny|google us english|google uk english female)/i.test(v.name))
+        || voices.find(v => /en-US/i.test(v.lang) && !/male|david|mark|guy/i.test(v.name))
+        || voices.find(v => /en/i.test(v.lang) && !/male|david|mark|guy/i.test(v.name))
+        || voices[0];
+      if (femaleEnglishVoice) {
+        currentUtterance.voice = femaleEnglishVoice;
+      }
+      
+      speechSynthesis.speak(currentUtterance);
+    }
+    
+    function stopSpeak() {
+      speechSynthesis.cancel();
+    }
     
     function showSlide(n) {
+      // Stop speaking when changing slides
+      stopSpeak();
+      
       const slides = document.querySelectorAll('.slide');
       slides.forEach(slide => slide.classList.remove('active'));
       
@@ -528,6 +587,13 @@
       
       document.querySelector(`[data-slide="${currentSlide}"]`).classList.add('active');
       document.getElementById('current-slide').textContent = currentSlide;
+      
+      // Auto speak after a short delay
+      setTimeout(() => {
+        if (document.getElementById('autoSpeak').checked) {
+          speak(slideContent[currentSlide]);
+        }
+      }, 500);
     }
     
     function nextSlide() {
@@ -538,6 +604,10 @@
     function prevSlide() {
       currentSlide--;
       showSlide(currentSlide);
+    }
+    
+    function readCurrentSlide() {
+      speak(slideContent[currentSlide]);
     }
     
     function checkGame(el, isCorrect) {
@@ -557,7 +627,13 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
       if (e.key === 'ArrowLeft') prevSlide();
+      if (e.key === 'Enter') readCurrentSlide();
     });
+    
+    // Load voices
+    speechSynthesis.onvoiceschanged = () => {
+      console.log('Voices loaded:', speechSynthesis.getVoices().length);
+    };
   </script>
 </body>
 </html>
