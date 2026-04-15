@@ -323,10 +323,22 @@ pre.template{
 @media (max-width: 900px){
   .hero-grid{grid-template-columns:1fr}
 }
+.category-block{margin-top:18px}
+.category-title{font-size:22px;margin:0 0 14px;color:var(--text)}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:14px}
+.grid-5{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:14px}
+.class-card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:var(--shadow)}
+.class-card h4{margin:0 0 10px;font-size:20px}
+.class-card ul{margin:0 0 14px;padding-left:18px;color:var(--muted)}
+
+@media (max-width: 900px){
+  .hero-grid{grid-template-columns:1fr}
+  .grid-4,.grid-5{grid-template-columns:repeat(2,1fr)}
+}
 @media (max-width: 720px){
   h1{font-size:38px}
   .menu{display:none}
-  .grid-3{grid-template-columns:1fr}
+  .grid-3,.grid-4,.grid-5{grid-template-columns:1fr}
   .contact{grid-template-columns:1fr}
   .photo-grid{grid-template-columns:1fr 1fr}
   .avatar{height:220px}
