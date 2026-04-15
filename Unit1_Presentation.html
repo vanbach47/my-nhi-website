@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Unit 1: In the school playground - Bài giảng tiếng Anh Lớp 1</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #111;
+      color: #fff;
+      overflow: hidden;
+    }
+    
+    .slideshow {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+    
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    }
+    
+    .slide.active {
+      opacity: 1;
+    }
+    
+    /* Slide 1: Cover */
+    .slide-cover {
+      background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+      text-align: center;
+    }
+    
+    .slide-cover h1 {
+      font-size: 72px;
+      color: #fff;
+      margin-bottom: 20px;
+      animation: fadeInUp 1s ease;
+    }
+    
+    .slide-cover h2 {
+      font-size: 36px;
+      color: #fff;
+      opacity: 0.9;
+      animation: fadeInUp 1s ease 0.3s both;
+    }
+    
+    .slide-cover .school-icon {
+      font-size: 120px;
+      margin-bottom: 30px;
+      animation: bounce 2s infinite;
+    }
+    
+    .slide-cover .teacher {
+      font-size: 24px;
+      margin-top: 40px;
+      opacity: 0.8;
+      animation: fadeInUp 1s ease 0.6s both;
+    }
+    
+    /* Slide 2: Warm up */
+    .slide-warmup {
+      text-align: center;
+    }
+    
+    .slide-warmup h2 {
+      font-size: 48px;
+      color: #FFD54F;
+      margin-bottom: 40px;
+    }
+    
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      max-width: 800px;
+    }
+    
+    .image-item {
+      background: rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+      animation: fadeInUp 0.5s ease both;
+    }
+    
+    .image-item span {
+      font-size: 60px;
+      display: block;
+    }
+    
+    .image-item p {
+      font-size: 24px;
+      margin-top: 10px;
+    }
+    
+    /* Slide 3: Letter B */
+    .slide-letter {
+      text-align: center;
+    }
+    
+    .letter-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 100px;
+      margin: 40px 0;
+    }
+    
+    .big-b, .small-b {
+      font-size: 200px;
+      font-weight: bold;
+      animation: pulse 2s infinite;
+    }
+    
+    .big-b { color: #2196F3; }
+    .small-b { color: #FF9800; }
+    
+    .letter-info {
+      font-size: 32px;
+      color: #81D4FA;
+    }
+    
+    /* Slide 4: Sound */
+    .slide-sound {
+      text-align: center;
+    }
+    
+    .sound-display {
+      font-size: 120px;
+      color: #E91E63;
+      margin: 30px 0;
+    }
+    
+    .sound-desc {
+      font-size: 36px;
+      color: #fff;
+    }
+    
+    .bubble-icon {
+      font-size: 100px;
+      animation: pop 1s infinite;
+    }
+    
+    /* Slide 5-8: Vocabulary */
+    .slide-vocab {
+      text-align: center;
+    }
+    
+    .vocab-word {
+      font-size: 80px;
+      color: #4CAF50;
+      margin: 20px 0;
+    }
+    
+    .vocab phonetic {
+      font-size: 36px;
+      color: #aaa;
+    }
+    
+    .vocab-image {
+      font-size: 150px;
+      margin: 20px 0;
+      animation: bounce 1s infinite;
+    }
+    
+    .vocab-meaning {
+      font-size: 28px;
+      color: #fff;
+    }
+    
+    /* Slide 9: Practice */
+    .slide-practice {
+      text-align: center;
+    }
+    
+    .practice-list {
+      font-size: 36px;
+      line-height: 2;
+    }
+    
+    .practice-list span {
+      color: #FFD54F;
+    }
+    
+    /* Slide 10: Game */
+    .slide-game {
+      text-align: center;
+    }
+    
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+      max-width: 700px;
+    }
+    
+    .game-item {
+      background: rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 30px;
+      cursor: pointer;
+      transition: transform 0.3s, background 0.3s;
+    }
+    
+    .game-item:hover {
+      transform: scale(1.05);
+    }
+    
+    .game-item.correct {
+      background: rgba(76, 175, 80, 0.3);
+      border: 3px solid #4CAF50;
+    }
+    
+    .game-item.wrong {
+      background: rgba(244, 67, 54, 0.3);
+      border: 3px solid #f44336;
+    }
+    
+    .game-item span {
+      font-size: 60px;
+      display: block;
+    }
+    
+    .game-item p {
+      font-size: 28px;
+      margin-top: 10px;
+    }
+    
+    /* Slide 11: Summary */
+    .slide-summary {
+      text-align: center;
+    }
+    
+    .summary-words {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      margin: 40px 0;
+    }
+    
+    .summary-word {
+      font-size: 40px;
+      background: rgba(255,255,255,0.1);
+      padding: 20px 30px;
+      border-radius: 15px;
+    }
+    
+    /* Slide 12: Homework */
+    .slide-homework {
+      text-align: center;
+      background: linear-gradient(135deg, #673AB7 0%, #512DA8 100%);
+    }
+    
+    .homework-list {
+      font-size: 32px;
+      text-align: left;
+      max-width: 600px;
+      line-height: 2;
+    }
+    
+    /* Slide 13: End */
+    .slide-end {
+      text-align: center;
+      background: linear-gradient(135deg, #E91E63 0%, #C2185B 100%);
+    }
+    
+    .slide-end h1 {
+      font-size: 60px;
+      animation: wave 1s infinite;
+    }
+    
+    /* Navigation */
+    .nav-buttons {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 20px;
+      z-index: 100;
+    }
+    
+    .nav-btn {
+      padding: 15px 30px;
+      font-size: 18px;
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .nav-btn:hover {
+      background: rgba(255,255,255,0.4);
+    }
+    
+    .slide-counter {
+      position: fixed;
+      bottom: 35px;
+      right: 30px;
+      font-size: 18px;
+      color: #aaa;
+    }
+    
+    /* Animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    @keyframes pop {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    
+    @keyframes wave {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-10deg); }
+      75% { transform: rotate(10deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="slideshow">
+    <!-- Slide 1: Cover -->
+    <div class="slide slide-cover active" data-slide="1">
+      <div class="school-icon">🏫</div>
+      <h1>UNIT 1</h1>
+      <h2>In the school playground</h2>
+      <p class="teacher">Tiếng Anh Lớp 1 - Cô Nguyễn Thị Mỹ Nhi</p>
+    </div>
+    
+    <!-- Slide 2: Warm up -->
+    <div class="slide slide-warmup" data-slide="2">
+      <h2>❓ What can you see at school?</h2>
+      <div class="image-grid">
+        <div class="image-item" style="animation-delay: 0.1s;">
+          <span>🏫</span>
+          <p>School</p>
+        </div>
+        <div class="image-item" style="animation-delay: 0.2s;">
+          <span>👦</span>
+          <p>Kids</p>
+        </div>
+        <div class="image-item" style="animation-delay: 0.3s;">
+          <span>📚</span>
+          <p>Books</p>
+        </div>
+        <div class="image-item" style="animation-delay: 0.4s;">
+          <span>⚽</span>
+          <p>Ball</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Slide 3: Letter B -->
+    <div class="slide slide-letter" data-slide="3">
+      <h2 style="font-size: 36px; color: #aaa; margin-bottom: 20px;">🔤 LEARN THE LETTER</h2>
+      <div class="letter-container">
+        <div class="big-b">B</div>
+        <div class="small-b">b</div>
+      </div>
+      <p class="letter-info">B = chữ cái thứ 2 trong bảng chữ cái</p>
+    </div>
+    
+    <!-- Slide 4: Sound /b/ -->
+    <div class="slide slide-sound" data-slide="4">
+      <h2 style="font-size: 36px; color: #aaa; margin-bottom: 20px;">🔊 THE SOUND /b/</h2>
+      <div class="bubble-icon">🫧</div>
+      <div class="sound-display">/b/</div>
+      <p class="sound-desc">Phát âm như tiếng bong bóng vỡ: "bụp!"</p>
+    </div>
+    
+    <!-- Slide 5: BILL -->
+    <div class="slide slide-vocab" data-slide="5">
+      <p style="color: #aaa; font-size: 24px;">📚 VOCABULARY 1</p>
+      <div class="vocab-word">BILL</div>
+      <p class="phonetic">/bɪl/</p>
+      <div class="vocab-image">👦</div>
+      <p class="vocab-meaning">Bill - Tên một bạn nam</p>
+    </div>
+    
+    <!-- Slide 6: BOOK -->
+    <div class="slide slide-vocab" data-slide="6">
+      <p style="color: #aaa; font-size: 24px;">📚 VOCABULARY 2</p>
+      <div class="vocab-word">BOOK</div>
+      <p class="phonetic">/bʊk/</p>
+      <div class="vocab-image">📚</div>
+      <p class="vocab-meaning">Book - Quyển sách</p>
+    </div>
+    
+    <!-- Slide 7: BIKE -->
+    <div class="slide slide-vocab" data-slide="7">
+      <p style="color: #aaa; font-size: 24px;">📚 VOCABULARY 3</p>
+      <div class="vocab-word">BIKE</div>
+      <p class="phonetic">/baɪk/</p>
+      <div class="vocab-image">🚲</div>
+      <p class="vocab-meaning">Bike - Xe đạp</p>
+    </div>
+    
+    <!-- Slide 8: BALL -->
+    <div class="slide slide-vocab" data-slide="8">
+      <p style="color: #aaa; font-size: 24px;">📚 VOCABULARY 4</p>
+      <div class="vocab-word">BALL</div>
+      <p class="phonetic">/bɔːl/</p>
+      <div class="vocab-image">⚽</div>
+      <p class="vocab-meaning">Ball - Quả bóng</p>
+    </div>
+    
+    <!-- Slide 9: Practice -->
+    <div class="slide slide-practice" data-slide="9">
+      <h2 style="font-size: 48px; color: #4CAF50; margin-bottom: 40px;">👂 READ AFTER ME!</h2>
+      <div class="practice-list">
+        <p><span>B - I - L - L</span> → Bill!</p>
+        <p><span>B - O - O - K</span> → Book!</p>
+        <p><span>B - I - K - E</span> → Bike!</p>
+        <p><span>B - A - L - L</span> → Ball!</p>
+      </div>
+    </div>
+    
+    <!-- Slide 10: Game -->
+    <div class="slide slide-game" data-slide="10">
+      <h2 style="font-size: 48px; color: #FFD54F; margin-bottom: 30px;">🎯 FIND THE B WORDS!</h2>
+      <p style="font-size: 24px; color: #aaa; margin-bottom: 30px;">Click vào những từ bắt đầu bằng chữ B</p>
+      <div class="game-grid">
+        <div class="game-item" onclick="checkGame(this, true)">
+          <span>👦</span>
+          <p>Bill</p>
+        </div>
+        <div class="game-item" onclick="checkGame(this, false)">
+          <span>🐱</span>
+          <p>Cat</p>
+        </div>
+        <div class="game-item" onclick="checkGame(this, true)">
+          <span>📚</span>
+          <p>Book</p>
+        </div>
+        <div class="game-item" onclick="checkGame(this, false)">
+          <span>🐕</span>
+          <p>Dog</p>
+        </div>
+      </div>
+      <p id="game-feedback" style="margin-top: 20px; font-size: 24px;"></p>
+    </div>
+    
+    <!-- Slide 11: Summary -->
+    <div class="slide slide-summary" data-slide="11">
+      <h2 style="font-size: 48px; color: #4CAF50; margin-bottom: 20px;">✅ TODAY WE LEARNED</h2>
+      <p style="font-size: 28px; color: #aaa;">Chữ cái và âm /b/</p>
+      <div class="summary-words">
+        <div class="summary-word">🔵 B / b</div>
+        <div class="summary-word">🔊 /b/</div>
+      </div>
+      <p style="font-size: 32px; margin-top: 30px;">Từ vựng:</p>
+      <div class="summary-words">
+        <div class="summary-word">BILL</div>
+        <div class="summary-word">BOOK</div>
+        <div class="summary-word">BIKE</div>
+        <div class="summary-word">BALL</div>
+      </div>
+      <p style="font-size: 24px; color: #4CAF50; margin-top: 30px;">Tất cả đều bắt đầu bằng âm /b/!</p>
+    </div>
+    
+    <!-- Slide 12: Homework -->
+    <div class="slide slide-homework" data-slide="12">
+      <h2 style="font-size: 48px; margin-bottom: 40px;">📝 HOMEWORK</h2>
+      <div class="homework-list">
+        <p>1. Luyện đọc: Bill, Book, Bike, Ball</p>
+        <p>2. Tìm 3 từ khác bắt đầu bằng B</p>
+        <p>3. Cho phụ huynh xem lại</p>
+        <p>4. Xem video bài giảng ở nhà 📺</p>
+      </div>
+    </div>
+    
+    <!-- Slide 13: End -->
+    <div class="slide slide-end" data-slide="13">
+      <div style="font-size: 80px;">👋</div>
+      <h1>SEE YOU NEXT LESSON!</h1>
+      <p style="font-size: 28px; margin-top: 30px;">Unit 1: In the school playground</p>
+      <p style="font-size: 24px; margin-top: 20px; opacity: 0.7;">Cô Nguyễn Thị Mỹ Nhi</p>
+    </div>
+  </div>
+  
+  <!-- Navigation -->
+  <div class="nav-buttons">
+    <button class="nav-btn" onclick="prevSlide()">◀ Trước</button>
+    <button class="nav-btn" onclick="nextSlide()">Sau ▶</button>
+  </div>
+  <div class="slide-counter">
+    <span id="current-slide">1</span> / <span id="total-slides">13</span>
+  </div>
+  
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 13;
+    
+    function showSlide(n) {
+      const slides = document.querySelectorAll('.slide');
+      slides.forEach(slide => slide.classList.remove('active'));
+      
+      if (n > totalSlides) currentSlide = 1;
+      if (n < 1) currentSlide = totalSlides;
+      
+      document.querySelector(`[data-slide="${currentSlide}"]`).classList.add('active');
+      document.getElementById('current-slide').textContent = currentSlide;
+    }
+    
+    function nextSlide() {
+      currentSlide++;
+      showSlide(currentSlide);
+    }
+    
+    function prevSlide() {
+      currentSlide--;
+      showSlide(currentSlide);
+    }
+    
+    function checkGame(el, isCorrect) {
+      const feedback = document.getElementById('game-feedback');
+      if (isCorrect) {
+        el.classList.add('correct');
+        feedback.textContent = '✅ Đúng rồi! Từ này bắt đầu bằng B!';
+        feedback.style.color = '#4CAF50';
+      } else {
+        el.classList.add('wrong');
+        feedback.textContent = '❌ Không đúng! Từ này không bắt đầu bằng B';
+        feedback.style.color = '#f44336';
+      }
+    }
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+      if (e.key === 'ArrowLeft') prevSlide();
+    });
+  </script>
+</body>
+</html>
