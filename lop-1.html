@@ -131,6 +131,62 @@
         </div>
       </div>
 
+      <!-- Game Demo Section -->
+      <div class="category-block" style="margin-top: 60px; background: rgba(255,255,255,0.05); padding: 30px; border-radius: 30px; border: 2px dashed var(--brand);">
+        <h3 class="category-title" style="text-align: center;">🎮 Game chơi thử: Unit 1 - Âm /b/</h3>
+        <p style="text-align: center; margin-bottom: 20px;">Nhiệm vụ: Hãy click vào tất cả các hình ảnh bắt đầu bằng chữ <b>B</b> nhé!</p>
+        
+        <div id="game-container" style="max-width: 600px; margin: 0 auto; background: var(--card); padding: 20px; border-radius: 20px; text-align: center;">
+          <div id="game-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+            <!-- Game items -->
+            <div class="game-item tilt" onclick="checkAnswer(this, true)" style="cursor: pointer; background: #1a1a1a; padding: 20px; border-radius: 15px; border: 1px solid var(--line);">
+              <span style="font-size: 40px;">📚</span>
+              <p>Book</p>
+            </div>
+            <div class="game-item tilt" onclick="checkAnswer(this, false)" style="cursor: pointer; background: #1a1a1a; padding: 20px; border-radius: 15px; border: 1px solid var(--line);">
+              <span style="font-size: 40px;">🍎</span>
+              <p>Apple</p>
+            </div>
+            <div class="game-item tilt" onclick="checkAnswer(this, true)" style="cursor: pointer; background: #1a1a1a; padding: 20px; border-radius: 15px; border: 1px solid var(--line);">
+              <span style="font-size: 40px;">🚲</span>
+              <p>Bike</p>
+            </div>
+            <div class="game-item tilt" onclick="checkAnswer(this, false)" style="cursor: pointer; background: #1a1a1a; padding: 20px; border-radius: 15px; border: 1px solid var(--line);">
+              <span style="font-size: 40px;">🐱</span>
+              <p>Cat</p>
+            </div>
+          </div>
+          <div id="game-feedback" style="margin-top: 20px; font-weight: bold; font-size: 1.2rem; min-height: 1.5em;"></div>
+          <button onclick="resetGame()" class="btn-small" style="margin-top: 15px;">Chơi lại</button>
+        </div>
+      </div>
+
+      <script>
+        function checkAnswer(el, isCorrect) {
+          const feedback = document.getElementById('game-feedback');
+          if (isCorrect) {
+            el.style.borderColor = '#4ade80';
+            el.style.background = 'rgba(74, 222, 128, 0.1)';
+            feedback.innerHTML = '✅ Tuyệt vời! Bạn giỏi quá!';
+            feedback.style.color = '#4ade80';
+          } else {
+            el.style.borderColor = '#f87171';
+            el.style.background = 'rgba(248, 113, 113, 0.1)';
+            feedback.innerHTML = '❌ Ôi, thử lại xem nào!';
+            feedback.style.color = '#f87171';
+          }
+        }
+
+        function resetGame() {
+          const items = document.querySelectorAll('.game-item');
+          items.forEach(item => {
+            item.style.borderColor = 'var(--line)';
+            item.style.background = '#1a1a1a';
+          });
+          document.getElementById('game-feedback').innerHTML = '';
+        }
+      </script>
+
       <!-- Other classes -->
       <div class="category-block" style="margin-top: 40px;">
         <h3 class="category-title">Các lớp khác</h3>
